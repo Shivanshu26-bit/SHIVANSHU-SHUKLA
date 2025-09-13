@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Government Eligibility Login Portal</title>
+  <style>
+    body {
+      background: #f4f4f4;
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 400px;
+      border: 1.5px solid #d6d6d6;
+      padding-bottom: 20px;
+    }
+    .header {
+      background: #fffce6;
+      border-bottom: 2px solid #15406c;
+      padding: 25px 20px 20px;
+      border-radius: 12px 12px 0 0;
+      text-align: center;
+    }
+    .header img {
+      width: 60px;
+      height: auto;
+      margin-bottom: 12px;
+    }
+    .header h1 {
+      color: #15406c;
+      font-weight: 800;
+      font-size: 22px;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid #e3e3e3;
+      background: #f9f9f9;
+      cursor: pointer;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px 0;
+      font-weight: 700;
+      color: #5d5d82;
+      border-bottom: 3px solid transparent;
+      font-size: 16px;
+      user-select: none;
+      transition: all 0.2s ease-in-out;
+    }
+    .tab.active {
+      color: #15406c;
+      background: #fff;
+      border-bottom-color: #15406c;
+      font-weight: 900;
+    }
+    form {
+      padding: 20px 25px;
+    }
+    form h2 {
+      color: #15406c;
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin: 15px 0 6px 0;
+      font-size: 14.5px;
+      color: #2e2e3a;
+    }
+    label .required {
+      color: #b41111;
+      margin-left: 3px;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 11px 12px;
+      font-size: 15px;
+      border-radius: 5px;
+      border: 1.6px solid #c3c7d3;
+      background-color: #f8f9fc;
+      transition: border-color 0.25s ease-in-out;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+      border-color: #15406c;
+      outline: none;
+      background-color: #fff;
+    }
+    input[type="submit"],
+    button.otp-btn {
+      width: 100%;
+      padding: 12px 15px;
+      margin-top: 24px;
+      font-weight: 800;
+      font-size: 17px;
+      color: white;
+      background-color: #15406c;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.25s ease-in-out;
+    }
+    input[type="submit"]:hover,
+    button.otp-btn:hover {
+      background-color: #1754a3;
+    }
+    .otp-btn:disabled,
+    input[type="submit"]:disabled {
+      background-color: #8da4d3;
+      cursor: not-allowed;
+    }
+    .section-title {
+      font-size: 15px;
+      color: #4a4a60;
+      font-weight: 700;
+      margin-top: 30px;
+      letter-spacing: 1.1px;
+      border-bottom: 1.5px solid #c8c8d3;
+      padding-bottom: 5px;
+    }
+    .error {
+      font-size: 14.5px;
+      color: #b42a2a;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 18px;
+      min-height: 22px;
+      user-select: none;
+    }
+    .success {
+      font-size: 16px;
+      color: #247e3e;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 18px;
+      min-height: 22px;
+      user-select: none;
+    }
+    .hidden {
+      display: none;
+    }
+    .footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 12.5px;
+      border-top: 1.5px solid #e0e0e0;
+      color: #636363;
+      user-select: none;
+    }
+    .footer a {
+      color: #15406c;
+      text-decoration: underline;
+    }
+    @media only screen and (max-width: 430px) {
+      .container {
+        width: 97vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-labelledby="page-title">
+    <header class="header">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/8/88/Emblem_of_India_with_transparent_background.png"
+        alt="Indian Government Emblem"
+        width="60"
+        height="60"
+      />
+      <h1 id="page-title" class="title">Government of India - Eligibility Portal</h1>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Login Method Tabs">
+      <div id="tab-password" class="tab active" role="tab" aria-selected="true" tabindex="0" aria-controls="panel-password">Password Login</div>
+      <div id="tab-otp" class="tab" role="tab" aria-selected="false" tabindex="-1" aria-controls="panel-otp">OTP Login</div>
+    </nav>
+
+    <form id="password-form" class="login-form" role="tabpanel" aria-labelledby="tab-password" aria-hidden="false">
+      <h2>Password Login</h2>
+
+      <label for="username">Username <span class="required" aria-hidden="true">*</span></label>
+      <input id="username" type="text" name="username" required autocomplete="username" placeholder="Enter your username" />
+
+      <label for="password">Password <span class="required" aria-hidden="true">*</span></label>
+      <input id="password" type="password" name="password" required autocomplete="current-password" placeholder="Enter your password" />
+
+      <div class="section-title">Eligibility</div>
+
+      <label for="nationality-pwd">Nationality <span class="required" aria-hidden="true">*</span></label>
+      <input id="nationality-pwd" type="text" name="nationality" placeholder="Indian" required />
+
+      <label for="age-pwd">Age (21-24) <span class="required" aria-hidden="true">*</span></label>
+      <input id="age-pwd" type="number" name="age" min="21" max="24" placeholder="21 to 24" required />
+
+      <label for="fte-pwd">Full-Time Employed? <span class="required" aria-hidden="true">*</span></label>
+      <select id="fte-pwd" name="fullTimeEmployed" required>
+        <option value="">Select option</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+
+      <label for="fts-pwd">Full-Time Student? <span class="required" aria-hidden="true">*</span></label>
+      <select id="fts-pwd" name="fullTimeStudent" required>
+        <option value="">Select option</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+
+      <label for="education-pwd">Education <span class="required" aria-hidden="true">*</span></label>
+      <input id="education-pwd" type="text" name="education" placeholder="e.g. B.Sc, ITI, Diploma" required />
+
+      <label for="income-pwd">Family Income (₹) <span class="required" aria-hidden="true">*</span></label>
+      <input id="income-pwd" type="text" name="income" placeholder="e.g. 6,50,000" required />
+
+      <input type="submit" value="Login" spellcheck="false" />
+    </form>
+
+    <form id="otp-form" class="login-form hidden" role="tabpanel" aria-labelledby="tab-otp" aria-hidden="true">
+      <h2>OTP Login</h2>
+
+      <label for="phone-otp">Mobile Number <span class="required" aria-hidden="true">*</span></label>
+      <input id="phone-otp" type="text" name="phone" maxlength="10" placeholder="Enter your mobile number" required />
+
+      <div class="section-title">Eligibility</div>
+
+      <label for="nationality-otp">Nationality <span class="required" aria-hidden="true">*</span></label>
+      <input id="nationality-otp" type="text" name="nationality" placeholder="Indian" required />
+
+      <label for="age-otp">Age (21-24) <span class="required" aria-hidden="true">*</span></label>
+      <input id="age-otp" type="number" name="age" min="21" max="24" placeholder="21 to 24" required />
+
+      <label for="fte-otp">Full-Time Employed? <span class="required" aria-hidden="true">*</span></label>
+      <select id="fte-otp" name="fullTimeEmployed" required>
+        <option value="">Select option</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+
+      <label for="fts-otp">Full-Time Student? <span class="required" aria-hidden="true">*</span></label>
+      <select id="fts-otp" name="fullTimeStudent" required>
+        <option value="">Select option</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+
+      <label for="education-otp">Education <span class="required" aria-hidden="true">*</span></label>
+      <input id="education-otp" type="text" name="education" placeholder="e.g. B.Sc, ITI, Diploma" required />
+
+      <label for="income-otp">Family Income (₹) <span class="required" aria-hidden="true">*</span></label>
+      <input id="income-otp" type="text" name="income" placeholder="e.g. 6,50,000" required />
+
+      <button type="button" class="otp-btn" id="send-otp-btn">Send OTP</button>
+      <input id="otp-input" type="number" name="otp" placeholder="Enter OTP" min="0" max="999999" class="hidden" />
+      <input id="otp-submit-btn" type="submit" value="Verify OTP" class="hidden" />
+    </form>
+
+    <div class="error" id="error-message" aria-live="assertive" role="alert"></div>
+    <div class="success" id="success-message" aria-live="polite" role="status"></div>
+
+    <footer class="footer">
+      &copy; 2025 Government of India | <a href="https://www.india.gov.in" target="_blank">National Portal</a> | <a href="#">Contact Us</a>
+    </footer>
+  </div>
+
+  <script>
+    // Tabs toggling with ARIA support
+    const tabs = {
+      password: document.getElementById('tab-password'),
+      otp: document.getElementById('tab-otp')
+    };
+    const forms = {
+      password: document.getElementById('password-form'),
+      otp: document.getElementById('otp-form')
+    };
+    const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
+    const otpInput = document.getElementById('otp-input');
+    const otpSubmitBtn = document.getElementById('otp-submit-btn');
+    const sendOtpBtn = document.getElementById('send-otp-btn');
+
+    function activateTab(tabName) {
+      Object.keys(tabs).forEach(key => {
+        const tab = tabs[key];
+        const form = forms[key];
+        if (key === tabName) {
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+          tab.tabIndex = 0;
+          form.classList.remove('hidden');
+          form.setAttribute('aria-hidden', 'false');
+        } else {
+          tab.classList.remove('active');
+          tab.setAttribute('aria-selected', 'false');
+          tab.tabIndex = -1;
+          form.classList.add('hidden');
+          form.setAttribute('aria-hidden', 'true');
+        }
+      });
+      errorMessage.textContent = '';
+      successMessage.textContent = '';
+    }
+
+    tabs.password.addEventListener('click', () => activateTab('password'));
+    tabs.otp.addEventListener('click', () => activateTab('otp'));
+
+    // Eligibility check shared function
+    function checkEligibility(fields) {
+      if (!fields.nationality || fields.nationality.trim().toLowerCase() !== 'indian')
+        return 'Candidate must be of Indian nationality.';
+      const age = Number(fields.age);
+      if (isNaN(age) || age < 21 || age > 24)
+        return 'Age must be between 21 and 24 years.';
+      if (fields.fullTimeEmployed === 'yes')
+        return 'Candidate should not be full-time employed.';
+      if (fields.fullTimeStudent === 'yes')
+        return 'Candidate should not be engaged in full-time education.';
+      const allowedDegrees = ['high school', 'secondary school', 'iti', 'diploma', 'ba', 'b.sc', 'b.com', 'bca', 'bba', 'b.pharma'];
+      const hasDegree = allowedDegrees.some(degree => fields.education && fields.education.toLowerCase().includes(degree));
+      if (!hasDegree)
+        return 'Candidate must meet minimum education requirements.';
+      const income = Number(fields.income.replace(/,/g,''));
+      if (isNaN(income) || income > 800000)
+        return 'Family income should not exceed ₹8,00,000/-';
+      return '';
+    }
+
+    // Handle password form submission
+    forms.password.addEventListener('submit', (e) => {
+      e.preventDefault();
+      errorMessage.textContent = '';
+      successMessage.textContent = '';
+
+      const fields = {
+        nationality: forms.password.nationality.value,
+        age: forms.password.age.value,
+        fullTimeEmployed: forms.password.fullTimeEmployed.value,
+        fullTimeStudent: forms.password.fullTimeStudent.value,
+        education: forms.password.education.value,
+        income: forms.password.income.value
+      };
+
+      const error = checkEligibility(fields);
+      if (error) {
+        errorMessage.textContent = error;
+        return;
+      }
+      // Demo credentials check
+      if (forms.password.username.value === 'admin' && forms.password.password.value === 'password') {
+        successMessage.textContent = 'Login successful!';
+      } else {
+        errorMessage.textContent = 'Invalid username or password.';
+      }
+    });
+
+    // Handle OTP logic
+    let generatedOtp = '';
+    sendOtpBtn.addEventListener('click', () => {
+      errorMessage.textContent = '';
+      successMessage.textContent = '';
+
+      const phone = forms.otp.phone.value.trim();
+      if (!phone.match(/^[6-9]\d{9}$/)) {
+        errorMessage.textContent = 'Enter a valid 10-digit Indian mobile number.';
+        return;
+      }
+
+      generatedOtp = '123456'; // placeholder for demo
+      otpInput.classList.remove('hidden');
+      otpSubmitBtn.classList.remove('hidden');
+      sendOtpBtn.disabled = true;
+      sendOtpBtn.textContent = 'OTP Sent!';
+    });
+
+    forms.otp.addEventListener('submit', (e) => {
+      e.preventDefault();
+      errorMessage.textContent = '';
+      successMessage.textContent = '';
+
+      const fields = {
+        nationality: forms.otp.nationality.value,
+        age: forms.otp.age.value,
+        fullTimeEmployed: forms.otp.fullTimeEmployed.value,
+        fullTimeStudent: forms.otp.fullTimeStudent.value,
+        education: forms.otp.education.value,
+        income: forms.otp.income.value
+      };
+
+      const error = checkEligibility(fields);
+      if (error) {
+        errorMessage.textContent = error;
+        return;
+      }
+      if (forms.otp.otp.value === generatedOtp) {
+        successMessage.textContent = 'OTP verified! Login successful.';
+      } else {
+        errorMessage.textContent = 'Incorrect OTP. Try again.';
+      }
+    });
+
+  </script>
+</body>
+</html>
